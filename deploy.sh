@@ -8,8 +8,9 @@
 # 输入你的环境上tomcat的全路径
 # export TOMCAT_APP_PATH=tomcat在部署机器上的路径
 
-cd $PROJ_PATH/mybolg 
-mvn clean install
+cd $PROJ_PATH
+mvn clean package
+
 
 
 
