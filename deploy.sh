@@ -10,9 +10,9 @@
 
 cd $PROJ_PATH
 #mvn clean package
-pname="`find .. -name 'my-blog*.jar'`"
-pname=${pname:3}
-pid=`ps -ef | grep $pname | grep -v grep | awk '{print $2}'`
+
+pid=`netstat -anp|grep 8888|awk '{printf $7}'|cut -d/ -f1`
+
 kill -9 $pid
 mvn clean install
 cd target/
