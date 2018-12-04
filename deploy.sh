@@ -10,46 +10,15 @@
 
 cd $PROJ_PATH
 #mvn clean package
-
-get_pid(){
-    pname="`find .. -name 'my-blog*.jar'`"
-    pname=${pname:3}
-    pid=`ps -ef | grep $pname | grep -v grep | awk '{print $2}'`
-    echo "$pid"
-}
-
-shut_down(){
-    pid=$(get_pid)
-    if [ "$pid" != "" ]
-    then
-        kill -9 $pid
-        echo "Blog is stop!"
-    else
-        echo "Blog already stop!"
-    fi
-}
-
-startup(){
-
-    #构建并启动
-    mvn clean install -Dmaven.test.skip=true
-    pid=$(get_pid)
-    if [ "$pid" != "" ]
-    then
-        echo "Blog already startup!"
-    else
-        jar_path=`find .. -name 'my-blog*.jar'`
-        echo "jarfile=$jar_path"
-        cmd="java $1 -jar $jar_path > ./my-blog.out < /dev/null &"
-        echo "cmd: $cmd"
-        java $1 -jar $jar_path > ./my-blog.out < /dev/null &
-        show_log
-    fi
-}
+pname="`find .. -name 'my-blog*.jar'`"
+pname=${pname:3}
+pid=`ps -ef | grep $pname | grep -v grep | awk '{print $2}'`
+kill -9 $pid
+mvn clean install
+cd target/
+nohup java -jar my-blog-3.3.0-SNAPSHOT.jar &
 
 
-shut_down
-startup
 
 
 
